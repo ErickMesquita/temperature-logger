@@ -2,15 +2,17 @@ version: '3'
 
 services:
   meu-mysql:
-    image: mysql:latest
+    build:
+      context: ./MySQL
+      dockerfile: mysql.dockerfile
     environment:
       - MYSQL_ROOT_PASSWORD=senha+super+secreta
-      - MYSQL_DATABASE=Medidas
+      #- MYSQL_DATABASE=Medidas
       - MYSQL_USER=app
       - MYSQL_PASSWORD=senha+super+secreta2
-    volumes: 
-      - ./MySQL:/usr/src
-      - ./MySQL/init.sql:/docker-entrypoint-initdb.d/init.sql
+    #volumes: 
+      #- ./MySQL:/usr/src
+      #- ./MySQL/init-scripts/:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
     networks:
