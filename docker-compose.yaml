@@ -7,14 +7,23 @@ services:
       dockerfile: mysql.dockerfile
     environment:
       - MYSQL_ROOT_PASSWORD=senha+super+secreta
-      #- MYSQL_DATABASE=Medidas
       - MYSQL_USER=app
       - MYSQL_PASSWORD=senha+super+secreta2
-    #volumes: 
-      #- ./MySQL:/usr/src
-      #- ./MySQL/init-scripts/:/docker-entrypoint-initdb.d/
+    volumes: 
+     - ./MySQL/data:/var/lib/mysql
     ports:
       - "3306:3306"
+    networks:
+      - back-end
+  
+  app:
+    build:
+      context: ./app
+      dockerfile: app.dockerfile
+    volumes:
+     - ./app/src:/usr/src/app/src
+    depends_on:
+      - meu-mysql
     networks:
       - back-end
     
