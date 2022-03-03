@@ -9,8 +9,8 @@ services:
       - MYSQL_ROOT_PASSWORD=senha+super+secreta
       - MYSQL_USER=app
       - MYSQL_PASSWORD=senha+super+secreta2
-    volumes: 
-     - ./MySQL/data:/var/lib/mysql
+    #volumes: 
+     #- ./MySQL/data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
@@ -24,6 +24,8 @@ services:
      - ./app/src:/usr/src/app/src
     depends_on:
       - meu-mysql
+    environment:
+      - DB_HOST=temperature-logger_meu-mysql_1
     networks:
       - back-end
     
