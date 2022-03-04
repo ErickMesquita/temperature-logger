@@ -63,6 +63,7 @@ def db_create_engine():
     
 
 def db_initial_connect(engine):
+    time.sleep(25)
     retries = 45
     while True:
         try:
@@ -74,7 +75,7 @@ def db_initial_connect(engine):
                 print("Não foi possível conectar ao banco de dados")
                 raise IOError
             retries -= 1
-            sleep(1)
+            time.sleep(1)
         else:
             return
 
@@ -84,6 +85,8 @@ def main():
     engine = db_create_engine()
 
     metadata_obj = MetaData()
+
+    db_initial_connect(engine)
 
     temperatura_tabela = db_get_table_temperatura(metadata_obj, engine)
 
@@ -95,7 +98,7 @@ def main():
         dict_values = get_values(api_host)
         with Session(engine) as session:
             session.execute(insert(temperatura_tabela).values(
-                Horário=     datetime.datetime.now(),
+                Horario=     datetime.datetime.now(),
                 Temperatura= dict_values.get("temperature"),
                 Umidade=     dict_values.get("humidity")
             ))
