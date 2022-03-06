@@ -12,7 +12,7 @@ from retry import retry
 
 @retry((requests.exceptions.Timeout, requests.exceptions.ConnectionError), backoff=1.3)
 def request_api(api_host: str, api_endpoint: str) -> float:
-	response = requests.get(f"http://{api_host}/{api_endpoint}", timeout=5)
+	response = requests.get(f"http://{api_host}/{api_endpoint}", timeout=4.5)
 	return float(response.text)
 	
 def request_api_safely(api_host: str, api_endpoint: str, logger=None) -> float:
