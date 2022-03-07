@@ -1,8 +1,8 @@
 FROM mysql:latest
 LABEL author="Erick Brunoro"
 
-COPY ./init-scripts/ /docker-entrypoint-initdb.d/
-RUN ["chmod", "755", "/docker-entrypoint-initdb.d", "-R"]
+# COPY ./init-scripts/ /docker-entrypoint-initdb.d/
+# RUN ["chmod", "755", "/docker-entrypoint-initdb.d", "-R"]
 # COPY ./mysql-root.txt /run/secrets/mysql-root.txt
 # ENV MYSQL_ROOT_PASSWORD=senha+super+secreta
 

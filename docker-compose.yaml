@@ -2,15 +2,15 @@ version: '3'
 
 services:
   meu-mysql:
-    build:
-      context: ./MySQL
-      dockerfile: mysql.dockerfile
+    image: mysql:latest
+    command: --innodb-use-native-aio=0
     environment:
       - MYSQL_ROOT_PASSWORD=senha+super+secreta
       - MYSQL_USER=app
       - MYSQL_PASSWORD=senha+super+secreta2
-    #volumes: 
-     #- ./MySQL/data:/var/lib/mysql
+    volumes: 
+     - MySQL-data:/var/lib/mysql
+     - ./MySQL/init-scripts:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
     networks:
@@ -32,3 +32,7 @@ services:
 networks:
   back-end:
     driver: bridge
+
+volumes:
+  MySQL-data:
+    name: temperature-logger-mysql
