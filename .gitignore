@@ -3,3 +3,4 @@ MySQL/mysql-app.txt
 comandos-docker.txt
 .vscode/settings.json
 comandos-docker-mysql.txt
+app/src/__pycache__

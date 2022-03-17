@@ -103,7 +103,7 @@ def main():
 	temperatura_tabela = db_get_table_temperatura(metadata_obj, engine)
 
 	api_host = "192.168.1.76"
-	periodo_sec = 60
+	periodo_sec = 90
 	start_time = time.time()
 
 	while(True):
