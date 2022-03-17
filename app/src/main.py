@@ -2,6 +2,8 @@ import os
 import urllib.parse
 import requests
 import time, datetime
+import logging
+
 from sqlalchemy.exc import NoSuchTableError
 from sqlalchemy import create_engine, text
 from sqlalchemy import MetaData, Table, Column, Float, SMALLINT, TIMESTAMP
@@ -20,11 +22,12 @@ def request_api_safely(api_host: str, api_endpoint: str, logger=None) -> float:
 		dados = request_api(api_host, api_endpoint)
 	except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
 		dados = None
-		msg = f"{str(e)}. Não foi possível conectar à API"
+		msg = f"{str(e)}. Não foi possível conectar à API {api_endpoint}"
 		if logger:
 			logger.error(msg)
 		else:
 			print(msg)
+			logging.warning(msg)
 	finally:
 		return dados
 
@@ -54,6 +57,7 @@ def db_get_table_temperatura(metadata_obj, engine):
 		)
 	except NoSuchTableError:
 		print("Tabela 'Temperatura' não encontrada, criando tabela em branco...")
+		logging.info("Tabela 'Temperatura' não encontrada, criando tabela em branco...")
 		temperatura_tabela = db_create_table_temperatura(metadata_obj)
 		temperatura_tabela.create(engine)
 
@@ -82,6 +86,7 @@ def db_initial_connect(engine):
 			with engine.connect() as conn:
 				result = conn.execute(text("select 'hello world'"))
 				print(result.all())
+				logging.info("Conexão inicial bem sucedida!")
 		except:
 			if retries == 0:
 				print("Não foi possível conectar ao banco de dados")
@@ -93,6 +98,19 @@ def db_initial_connect(engine):
 
 def main():
 	print("Hello World")
+
+	logs_folder = 'logs/'
+	logs_file = 'app.log'
+	file_path = os.path.join(logs_folder, logs_file)
+	if not os.path.exists(logs_folder):
+		os.mkdir(logs_folder)
+	if not os.path.exists(file_path):
+		with open(file_path, 'x') as fp:
+			pass
+        
+
+	logging.basicConfig(filename=file_path, format='%(asctime)s - %(levelname)s:%(message)s', datefmt='%d/%m/%Y %H:%M:%S')
+	logging.info("app iniciado! Hello World!")
 	
 	engine = db_create_engine()
 

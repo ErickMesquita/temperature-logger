@@ -23,6 +23,7 @@ services:
       dockerfile: app.dockerfile
     volumes:
      - ./app/src:/usr/src/app/src
+     - ./app/logs:/usr/src/app/logs
     depends_on:
       - db
     environment:
