@@ -4,7 +4,7 @@ import requests
 import time, datetime
 from sqlalchemy.exc import NoSuchTableError
 from sqlalchemy import create_engine, text
-from sqlalchemy import MetaData, Table, Column, Float, TIMESTAMP
+from sqlalchemy import MetaData, Table, Column, Float, SMALLINT, TIMESTAMP
 from sqlalchemy.orm import Session
 from sqlalchemy import insert, text
 
@@ -41,7 +41,7 @@ def db_create_table_temperatura(metadata_obj):
 		metadata_obj,
 		Column("Horario", TIMESTAMP(timezone=True), primary_key=True, key="Horário"),
 		Column("Temperatura", Float, comment="Temperatura em ºC"),
-		Column("Umidade", Float, comment="Umidade em %")
+		Column("Umidade", SMALLINT, comment="Umidade em %")
 	)
 	return temperatura_tabela
 
@@ -63,19 +63,19 @@ def db_get_table_temperatura(metadata_obj, engine):
 def db_create_engine():
 	user = urllib.parse.quote_plus(os.environ.get("DB_USER", "app"))
 	password = urllib.parse.quote_plus(os.environ.get("DB_PASS", "senha+super+secreta2"))
-	host = urllib.parse.quote_plus(os.environ.get("DB_HOST", "meu-mysql"))
-	port = urllib.parse.quote_plus(os.environ.get("DB_PORT", "3306"))
+	host = urllib.parse.quote_plus(os.environ.get("DB_HOST", "db"))
+	port = urllib.parse.quote_plus(os.environ.get("DB_PORT", "5432"))
 	database = urllib.parse.quote_plus(os.environ.get("DB_DATABASE", "Medidas"))
 	encoding = os.environ.get("DB_ENCODING", "utf8")
 	echo = os.environ.get("DB_ECHO", 1)
 
-	url = f"mysql+mysqldb://{user}:{password}@{host}:{port}/{database}"
+	url = f"postgresql://{user}:{password}@{host}:{port}/{database}"
 
 	return create_engine(url, encoding=encoding, echo=echo)
 	
 
 def db_initial_connect(engine):
-	time.sleep(25)
+	time.sleep(7)
 	retries = 45
 	while True:
 		try:

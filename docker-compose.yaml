@@ -1,18 +1,19 @@
 version: '3'
 
 services:
-  meu-mysql:
+  db:
     build:
-      context: ./MySQL
-      dockerfile: mysql.dockerfile
+      context: ./db
+      dockerfile: db.dockerfile
     environment:
-      - MYSQL_ROOT_PASSWORD=senha+super+secreta
-      - MYSQL_USER=app
-      - MYSQL_PASSWORD=senha+super+secreta2
-    #volumes: 
-     #- ./MySQL/data:/var/lib/mysql
+      #- POSTGRES_USER=app # Usar o usuário padrão "postgres"
+      - POSTGRES_PASSWORD=senha+super+secreta
+      - POSTGRES_DB="Medidas"
+    volumes: 
+     - ./db-data:/var/lib/postgresql/data
+     #- ./db/init-scripts:/docker-entrypoint-initdb.d/
     ports:
-      - "3306:3306"
+      - "3306:5432"
     networks:
       - back-end
   
@@ -23,12 +24,17 @@ services:
     volumes:
      - ./app/src:/usr/src/app/src
     depends_on:
-      - meu-mysql
+      - db
     environment:
-      - DB_HOST=temperature-logger_meu-mysql_1
+      - DB_HOST=temperature-logger_db_1
+      - DB_PORT=5432
     networks:
       - back-end
     
 networks:
   back-end:
     driver: bridge
+
+#volumes:
+#  db-data:
+#    name: temperature-logger-db
