@@ -5,3 +5,4 @@ comandos-docker.txt
 comandos-docker-mysql.txt
 app/src/__pycache__
 *.log
+Acessar postgres.txt
