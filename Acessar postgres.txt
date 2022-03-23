@@ -1,3 +1,0 @@
-﻿docker run -it --rm postgres psql --host=192.168.1.200 --port=3306 --list -U postgres
-
-docker run -it --rm postgres psql --host=192.168.1.200 --port=3306 --dbname=Medidas --username=app --password
