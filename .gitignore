@@ -4,3 +4,4 @@ comandos-docker.txt
 .vscode/settings.json
 comandos-docker-mysql.txt
 app/src/__pycache__
+*.log
