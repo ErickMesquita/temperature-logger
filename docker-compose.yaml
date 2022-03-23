@@ -12,7 +12,7 @@ services:
     volumes: 
      - ./db-data:/var/lib/postgresql/data
      #- ./db/init-scripts:/docker-entrypoint-initdb.d/
-    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+    #command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"] # log detalhado
     ports:
       - "3306:5432"
     networks:
