@@ -1,5 +1,12 @@
 # Temperature Logger
 
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | Temperature Logger
+| :label: Tecnologias | Python, PostgreSQL, Docker
+| :rocket: URL         | https://github.com/ErickMesquita/temperature-logger
+| :fire: Desafio     | 
+
 O objetivo desta aplicação é exercitar os conteúdos aprendidos sobre Docker, Python e Git. Trata-se de uma aplicação para registrar a temperatura e umidade do meu quarto ao longo do tempo. Os dados são obtidos de uma API e armazenados num banco de dados.
 
 *Read this in other languages: [English](README.en-US.md)*
